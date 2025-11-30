@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "257425107108",
+    "project_id": "fluttermob-75fa9",
+    "storage_bucket": "fluttermob-75fa9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257425107108:android:df480735d0fd180e1a5e31",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257425107108-eo4m0psjf84i3u8dmoc631t8d0610a8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjo0Cm1DwyHR4azeKvNM7WUGZj_qzMvr8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257425107108-eo4m0psjf84i3u8dmoc631t8d0610a8m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "257425107108-5smdaetch0266uctolo683d6ecgnm1s5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
