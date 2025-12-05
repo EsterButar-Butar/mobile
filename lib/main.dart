@@ -1,17 +1,17 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/screen/auth/login.dart';
-import 'package:mobile/screen/auth/profile.dart';
-import 'package:mobile/screen/auth/splash.dart';
-import 'package:mobile/screen/auth/navbar.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-// Ubah main menjadi Future karna prosesnya membutuhkan waktu (Asynchronous)
+// ==== IMPORT SCREEN ====
+import 'screen/features/splash.dart';
+import 'screen/features/navbar.dart';
+import 'screen/auth/login.dart';
+import 'screen/auth/register.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+  await Firebase.initializeApp();
 
   runApp(const MyApp());
 }
@@ -22,13 +22,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xff009421),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const SplashScreen(),
+      title: 'BudgetIn App',
+
+      // Routing
+      initialRoute: '/login',
+
+      routes: {
+        '/splash': (_) => const SplashScreen(),
+        '/login': (_) => const LoginScreen(),
+        // '/register': (_) => const SignUpScreen(),
+        '/home': (_) => const Navbar(),
+      },
     );
   }
 }

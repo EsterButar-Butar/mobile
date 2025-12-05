@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BerandaScreen extends StatelessWidget {
-  const BerandaScreen({super.key});
+class AddScreen extends StatelessWidget {
+  const AddScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,8 +9,8 @@ class BerandaScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Text(
-          "Ini Halaman beranda",
-          style: TextStyle(color: Colors.white, fontSize: 25),
+          "Ini Halaman Add",
+          style: TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
     );

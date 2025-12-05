@@ -1,178 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/partials/color.dart';
-import 'package:mobile/services/auth_service.dart';
+import 'package:budgetin_app/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  // 2. Buat fungsi untuk menangani login
-  void _handleGoogleSignIn() async {
-    final authService = AuthService();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // Hanya AuthService yang diperlukan
+  final auth = AuthService();
+
+  Future<void> loginGoogle() async {
     try {
-      final user = await authService.signInWithGoogle();
+      // Panggil fungsi sign-in Google dari AuthService
+      User? user = await auth.signInWithGoogle();
 
       if (user != null) {
-        // Login berhasil!
-        print("Login Berhasil: ${user.email}");
+        // Jika berhasil, navigasi ke home
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
       } else {
-        // Login dibatalkan / gagal
-        print("Login dibatalkan oleh user.");
+        // Jika user membatalkan atau gagal tanpa exception
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Google Sign-in dibatalkan atau gagal.")),
+          );
+        }
       }
     } catch (e) {
-      // Tampilkan error
-      print("Error: ${e}");
+      // Tangani error umum
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Google Sign-in gagal: ${e.toString()}")),
+        );
+      }
     }
   }
+
+  // Metode dispose tidak diperlukan lagi karena tidak ada Controller
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: const Color(0xffffffff),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset('assets/images/ornament-top-2.jpg'),
-            Column(
-              children: [
-                Image.asset('assets/images/logo-2.jpg'),
-                const SizedBox(height: 16),
-                const Text(
-                  'Masuk atau Daftar',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
+      appBar: AppBar(title: const Text("Budget In")),
+      body: Center( // Menggunakan Center karena hanya ada satu tombol
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Selamat Datang di Budget In!",
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 50),
+
+              // Tombol Login Google
+              OutlinedButton.icon(
+                onPressed: loginGoogle,
+                icon: const Icon(Icons.g_mobiledata, color: Colors.red, size: 30),
+                label: const Text(
+                  "Lanjutkan dengan Google",
+                  style: TextStyle(fontSize: 18),
                 ),
-                const SizedBox(height: 16),
-                Container(
-                  width: 372,
-                  height: 57,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: _handleGoogleSignIn, // implementasikan method yang baru saja kita buat
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/google-icon.jpg'),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Lanjutkan dengan Google',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  side: const BorderSide(color: Colors.grey),
                 ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: 370,
-                  height: 57,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff009421),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                    child: Text(
-                      "Selanjutnya",
-                      style: TextStyle(
-                        color: const Color(0xffffffff),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 9),
-                SizedBox(
-                  width: 372,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(width: 167, height: 2, color: Colors.black),
-                      const SizedBox(width: 3),
-                      Text('OR'),
-                      const SizedBox(width: 3),
-                      Container(width: 167, height: 2, color: Colors.black),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  width: 372,
-                  height: 57,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/google-icon.jpg'),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Lanjutkan dengan Google',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16,),
-                Container(
-                  width: 372,
-                  height: 57,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffffffff),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset('assets/images/facebook-icon.jpg'),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Lanjutkan dengan Facebook',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Image.asset('assets/images/ornament-bottom-2.jpg'),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

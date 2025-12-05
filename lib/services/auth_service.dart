@@ -21,7 +21,7 @@ class AuthService {
 
       // 5. Mengambil token keamanan (ID Token & Access Token) dari akun Google yang dipilih tadi.
       // Token ini ibarat KTP yang membuktikan akun tersebut asli.
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
 
       // 6. Membuat "Surat Jalan" (Credential) untuk diserahkan ke Firebase.
       // Kita menukar token dari Google menjadi format yang dimengerti oleh Firebase.

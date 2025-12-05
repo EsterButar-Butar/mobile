@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class JelajahiScreen extends StatelessWidget {
-  const JelajahiScreen({super.key});
+class StatisticScreen extends StatelessWidget {
+  const StatisticScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class JelajahiScreen extends StatelessWidget {
       body: Center(
         child: Text(
           "Ini Halaman Jelajahi",
-          style: TextStyle(color: Colors.white, fontSize: 25),
+          style: TextStyle(color: Colors.black, fontSize: 25),
         ),
       ),
     );
